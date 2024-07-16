@@ -1,3 +1,10 @@
+# V1
+# Meta Data Accuracy:         0.9302325581395349
+# Training Data Accuracy:     0.8072126297533729
+# Test Data Accuracy:         0.8220902612826604
+
+# -------------------------------------------------------
+
 import cv2
 import numpy as np
 import seaborn as sns
@@ -16,12 +23,8 @@ y_meta_color = []       # Stores meta data color
 
 # Subset 2: Partial Training Data
 X = []                  # Stores training images
-y = []                  # Stores labels of the training images (classID of each element in X)  
-y_color_train = []      # Stores training data color
-
-# Training Data
-X_train = []            # Combination of X and X_meta
-y_train = []            # Combination of y and y_meta
+y = []                  # Stores classID  
+y_color_train = []      # Stores colorID
 
 # Test Data
 X_test_read = []        # Stores test images 
@@ -119,13 +122,14 @@ def extract_color_id(image):
     sum_pixels =red_count + blue_count + yellow_count + white_count
     color_counts = [red_count, blue_count, yellow_count]
     if max(color_counts) < ((sum_pixels)/98):
-        color_id =  3   # If red, blue, and yellow count is too low, default to white colorID
+        color_id =  3   # If red, blue, and yellow count too low, default to white as dominant color
     else:
         color_id = color_counts.index(max(color_counts))
     return color_id
 
 # Test accuracy for meta data
-for i in range(20):
+length = len(X_meta):
+for i in range(length):
     print("Label", y_meta[i])
     print("Actual", y_meta_color[i])
     extracted = extract_color_id(X_meta[i])
